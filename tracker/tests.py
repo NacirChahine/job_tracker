@@ -193,3 +193,36 @@ class HTMXPartialTest(TestCase):
         self.assertEqual(r.status_code, 200)
         job.refresh_from_db()
         self.assertEqual(job.company_name, "Updated")
+
+    def test_cancel_edit_returns_job_item(self):
+        job = JobApplication.objects.create(user=self.user, company_name="AcmeCorp", position="Dev")
+        r = self.client.get(f"/jobs/{job.id}/")
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, "AcmeCorp")
+        self.assertContains(r, "Dev")
+
+    def test_edit_form_has_container_with_job_id(self):
+        job = JobApplication.objects.create(user=self.user, company_name="TestCo", position="Eng")
+        r = self.client.get(f"/jobs/{job.id}/edit/")
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, f'id="job-{job.id}"')
+        self.assertContains(r, "edit-form-")
+
+    def test_notes_edit_returns_notes_display_on_success(self):
+        job = JobApplication.objects.create(user=self.user, company_name="X", position="Y")
+        r = self.client.post(f"/jobs/{job.id}/notes/", {"notes": "My new note"})
+        self.assertEqual(r.status_code, 200)
+        self.assertContains(r, "My new note")
+        self.assertContains(r, "Edit Notes")
+        job.refresh_from_db()
+        self.assertEqual(job.notes, "My new note")
+
+    def test_delete_returns_200(self):
+        job = JobApplication.objects.create(user=self.user, company_name="X", position="Y")
+        r = self.client.delete(f"/jobs/{job.id}/delete/")
+        self.assertEqual(r.status_code, 200)
+        self.assertFalse(JobApplication.objects.filter(pk=job.id).exists())
+
+    def test_delete_nonexistent_returns_404(self):
+        r = self.client.delete("/jobs/99999/delete/")
+        self.assertEqual(r.status_code, 404)

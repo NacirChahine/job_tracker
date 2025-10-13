@@ -154,7 +154,7 @@ def job_notes_edit(request, pk):
         form = NotesEditForm(request.POST, instance=job)
         if form.is_valid():
             form.save()
-            return render(request, "partials/job_item.html", {"job": job})
+            return render(request, "partials/notes_display.html", {"job": job})
         return render(request, "partials/notes_edit.html", {"form": form, "job": job})
     return HttpResponse(status=405)
 

@@ -1,5 +1,6 @@
+<div id="notes-{{ job.id }}">
 <form hx-post="{% url 'tracker:job_notes_edit' job.id %}"
-      hx-target="#job-{{ job.id }}"
+      hx-target="#notes-{{ job.id }}"
       hx-swap="outerHTML">
     {% csrf_token %}
     {{ form.notes }}
@@ -16,3 +17,4 @@
         </button>
     </div>
 </form>
+</div>

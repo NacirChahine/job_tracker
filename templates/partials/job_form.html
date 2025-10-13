@@ -1,4 +1,8 @@
-<form id="job-form"
+{% if edit %}
+<div class="card mb-3 job-item" id="job-{{ job.id }}">
+<div class="card-body">
+{% endif %}
+<form id="{% if edit %}edit-form-{{ job.id }}{% else %}job-form{% endif %}"
       {% if edit %}
       hx-post="{% url 'tracker:job_update' job.id %}"
       hx-target="#job-{{ job.id }}"
@@ -30,3 +34,7 @@
     </button>
     {% endif %}
 </form>
+{% if edit %}
+</div>
+</div>
+{% endif %}

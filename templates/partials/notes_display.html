@@ -1,0 +1,19 @@
+<div id="notes-{{ job.id }}">
+    {% if job.notes %}
+    <small class="text-muted">Notes:</small>
+    <p class="mb-0 small">{{ job.notes|linebreaksbr }}</p>
+    <button class="btn btn-link btn-sm p-0 mt-1"
+            hx-get="{% url 'tracker:job_notes_edit' job.id %}"
+            hx-target="#notes-{{ job.id }}"
+            hx-swap="outerHTML">
+        Edit Notes
+    </button>
+    {% else %}
+    <button class="btn btn-link btn-sm p-0 mt-1"
+            hx-get="{% url 'tracker:job_notes_edit' job.id %}"
+            hx-target="#notes-{{ job.id }}"
+            hx-swap="outerHTML">
+        + Add Notes
+    </button>
+    {% endif %}
+</div>
