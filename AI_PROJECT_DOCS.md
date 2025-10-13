@@ -88,7 +88,7 @@ All under app_name `tracker`:
 1. **FBV over CBV:** Cleaner HTMX partial returns, explicit control flow
 2. **No DRF:** Pure template rendering, no JSON API layer
 3. **HTMX 2.x:** Form reset only on successful create via `htmx:afterRequest` + `event.detail.successful` check
-4. **CSRF on DELETE:** Delete button wrapped in `<form>` with `{% csrf_token %}` so HTMX DELETE includes CSRF token
+4. **CSRF on DELETE:** Global `htmx:configRequest` listener in base.html reads `csrftoken` cookie and sets `X-CSRFToken` header on all non-GET requests. Delete form also includes `{% csrf_token %}` as defense-in-depth.
 5. **Edit form container:** Edit form wrapped in `div#job-{{ job.id }}` so `hx-target` always resolves correctly for Save and Cancel
 6. **Notes scoped swap:** Notes edit targets `#notes-{{ job.id }}` with outerHTML, returns `notes_display.html` on success (not full card)
 7. **Status dropdown auto-submit:** `onchange` dispatches submit event on parent form
