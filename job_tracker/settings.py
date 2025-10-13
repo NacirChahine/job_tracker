@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8l9h$!puekl&q4$olmy88#mos!jivb%i&0_jiqg-*leq3+$no3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'narojobtracker.pythonanywhere.com']
 
@@ -69,6 +69,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'job_tracker.wsgi.application'
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
+
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Static file versioning for cache-busting
+STATIC_VERSION = '1.0.0'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
