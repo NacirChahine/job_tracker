@@ -1,0 +1,18 @@
+<form hx-post="{% url 'tracker:job_notes_edit' job.id %}"
+      hx-target="#job-{{ job.id }}"
+      hx-swap="outerHTML">
+    {% csrf_token %}
+    {{ form.notes }}
+    {% for error in form.notes.errors %}
+    <div class="text-danger small">{{ error }}</div>
+    {% endfor %}
+    <div class="mt-1">
+        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm"
+                hx-get="{% url 'tracker:job_detail' job.id %}"
+                hx-target="#job-{{ job.id }}"
+                hx-swap="outerHTML">
+            Cancel
+        </button>
+    </div>
+</form>

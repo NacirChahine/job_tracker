@@ -1,0 +1,32 @@
+<form id="job-form"
+      {% if edit %}
+      hx-post="{% url 'tracker:job_update' job.id %}"
+      hx-target="#job-{{ job.id }}"
+      hx-swap="outerHTML"
+      {% else %}
+      hx-post="{% url 'tracker:job_create' %}"
+      hx-target="#job-list"
+      hx-swap="afterbegin"
+      {% endif %}>
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="mb-2">
+        <label for="{{ field.id_for_label }}" class="form-label small mb-1">{{ field.label }}</label>
+        {{ field }}
+        {% for error in field.errors %}
+        <div class="text-danger small">{{ error }}</div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary btn-sm w-100">
+        {% if edit %}Save Changes{% else %}Add Application{% endif %}
+    </button>
+    {% if edit %}
+    <button type="button" class="btn btn-outline-secondary btn-sm w-100 mt-1"
+            hx-get="{% url 'tracker:job_detail' job.id %}"
+            hx-target="#job-{{ job.id }}"
+            hx-swap="outerHTML">
+        Cancel
+    </button>
+    {% endif %}
+</form>

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Job Tracker{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-4 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Add Application</h5>
+            </div>
+            <div class="card-body">
+                {% include "partials/job_form.html" with form=form %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>My Applications</h4>
+            <span id="job-count" class="badge bg-secondary">{{ applications|length }} total</span>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Search by company or position..."
+                       hx-get="{% url 'tracker:job_list' %}"
+                       hx-trigger="keyup changed delay:500ms"
+                       hx-target="#job-list"
+                       hx-include="[name='status']"
+                       name="search">
+            </div>
+            <div class="col-md-4">
+                <select class="form-select"
+                        hx-get="{% url 'tracker:job_list' %}"
+                        hx-trigger="change"
+                        hx-target="#job-list"
+                        hx-include="[name='search']"
+                        name="status">
+                    <option value="">All Statuses</option>
+                    {% for value, label in job_statuses %}
+                    <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div id="job-list">
+            {% include "partials/job_list.html" with applications=applications %}
+        </div>
+    </div>
+</div>
+{% endblock %}

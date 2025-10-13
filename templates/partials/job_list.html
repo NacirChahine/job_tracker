@@ -1,0 +1,7 @@
+{% for job in applications %}
+    {% include "partials/job_item.html" with job=job %}
+{% empty %}
+<div class="text-center text-muted py-4">
+    <p class="mb-0">No applications found. Add your first one!</p>
+</div>
+{% endfor %}
