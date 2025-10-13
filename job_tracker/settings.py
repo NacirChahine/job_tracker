@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-8l9h$!puekl&q4$olmy88#mos!jivb%i&0_jiqg-*leq3+$no3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'narojobtracker.pythonanywhere.com']
 
 
 # Application definition
